@@ -874,7 +874,7 @@
         function (code, languages) {
             var _this = this;
             // Set code text before highlighting
-            this.setCode(code);
+            this.setCode(this.escapeHtml(code));
             this._hljs.highlightAuto(code, languages).subscribe((/**
              * @param {?} res
              * @return {?}
@@ -952,6 +952,34 @@
              * @return {?}
              */
             function () { return _this._nativeElement.innerHTML = content; }));
+        };
+        /**
+         * @private
+         * @param {?} content
+         * @return {?}
+         */
+        Highlight.prototype.escapeHtml = /**
+         * @private
+         * @param {?} content
+         * @return {?}
+         */
+        function (content) {
+            /** @type {?} */
+            var entityMap = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;',
+                '/': '&#x2F;',
+                '`': '&#x60;',
+                '=': '&#x3D;'
+            };
+            return String(content).replace(/[&<>"'`=\/]/g, (/**
+             * @param {?} s
+             * @return {?}
+             */
+            function (s) { return entityMap[s]; }));
         };
         Highlight.decorators = [
             { type: core.Directive, args: [{

@@ -529,7 +529,7 @@ class Highlight {
      */
     highlightElement(code, languages) {
         // Set code text before highlighting
-        this.setCode(code);
+        this.setCode(this.escapeHtml(code));
         this._hljs.highlightAuto(code, languages).subscribe((/**
          * @param {?} res
          * @return {?}
@@ -592,6 +592,29 @@ class Highlight {
          * @return {?}
          */
         () => this._nativeElement.innerHTML = content));
+    }
+    /**
+     * @private
+     * @param {?} content
+     * @return {?}
+     */
+    escapeHtml(content) {
+        /** @type {?} */
+        const entityMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        };
+        return String(content).replace(/[&<>"'`=\/]/g, (/**
+         * @param {?} s
+         * @return {?}
+         */
+        s => entityMap[s]));
     }
 }
 Highlight.decorators = [

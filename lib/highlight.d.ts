@@ -22,4 +22,5 @@ export declare class Highlight implements OnChanges {
     private addLineNumbers;
     private destroyLineNumbersObserver;
     private setCode;
+    private escapeHtml;
 }
